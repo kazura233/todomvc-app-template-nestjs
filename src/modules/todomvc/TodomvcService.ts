@@ -29,14 +29,14 @@ export class TodomvcService {
   public async find(
     keyword: string,
     status: StatusEnum,
-  ): Promise<TodomvcEntity | null> {
+  ): Promise<TodomvcEntity[]> {
     const where: FindOptionsWhere<TodomvcEntity> = {};
 
     if (isNotEmpty(keyword)) where.item = Like(`%${keyword}%`);
 
     if (<number>status !== -1) where.status = status;
 
-    return this.todomvcRepository.findOne({
+    return this.todomvcRepository.find({
       where,
     });
   }

@@ -1,12 +1,13 @@
 import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import { APP_FILTER, NestFactory } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 
 import { resolve } from 'node:path';
 import { TypeOrmOptionsFactory } from './factory/TypeOrmOptionsFactory';
 import { TodomvcModule } from './modules/todomvc/TodomvcModule';
+import { GlobalExceptionFilter } from './common/GlobalExceptionFilter';
 
 @Module({
   imports: [
@@ -20,7 +21,12 @@ import { TodomvcModule } from './modules/todomvc/TodomvcModule';
     }),
     TodomvcModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionFilter,
+    },
+  ],
 })
 class MainModule {
   static async bootstrap() {
