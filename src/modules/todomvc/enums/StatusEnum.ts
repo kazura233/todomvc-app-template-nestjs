@@ -1,0 +1,4 @@
+export enum StatusEnum {
+  TODOMVC_STATUS_ACTIVE,
+  TODOMVC_STATUS_COMPLETED,
+}
